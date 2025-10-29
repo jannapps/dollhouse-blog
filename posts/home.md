@@ -9,6 +9,7 @@ A simple markdown-based blog built with Ruby on Rails
 ## Features
 
 - **Markdown-based content management** - All content is written in simple, readable markdown files
+- **Dynamic markdown content** - ERB support for dynamic content within markdown files
 - **Modern web design** - Responsive design with beautiful typography and modern CSS
 - **No database required for content** - Content is stored as markdown files in the filesystem  
 - **Ruby on Rails backend** - Powerful, mature web framework
@@ -22,6 +23,8 @@ This blog system demonstrates how to build a simple, fast, and maintainable blog
 
 *This homepage is now rendered from `posts/home.md` using markdown!*
 
-## Testing Internal Links
+## Testing Links
 
-Let's test if internal markdown links work: [Example Internal Link](/test)
+Let's test if internal markdown links work: 
+- [Example Internal Link](/test)
+- [Dynamic Content Example](/dynamic-example) - **NEW!** Dynamic ERB-powered markdown

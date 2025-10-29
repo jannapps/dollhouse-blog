@@ -1,0 +1,70 @@
+# Dynamic Markdown Example
+
+This page demonstrates dynamic content capabilities using ERB within markdown!
+
+## Current Information
+
+**Today's Date**: <%= Date.current.strftime("%A, %B %d, %Y") %>  
+**Current Time**: <%= Time.current.strftime("%I:%M %p %Z") %>  
+**Rails Version**: <%= Rails.version %>  
+**Ruby Version**: <%= RUBY_VERSION %>  
+**Environment**: <%= Rails.env %>
+
+## Dynamic Lists
+
+### Random Numbers
+<% 5.times do |i| %>
+<%= i + 1 %>. Random number: **<%= rand(1..100) %>**
+<% end %>
+
+### Environment Variables
+<% env_vars = %w[RAILS_ENV HOME USER] %>
+<% env_vars.each do |var| %>
+- **<%= var %>**: `<%= ENV[var] || 'Not set' %>`
+<% end %>
+
+## Conditional Content
+
+<% if Rails.env.development? %>
+### 🚧 Development Mode Features
+- Debug information is available
+- Hot reloading is enabled
+- Development gems are loaded
+<% elsif Rails.env.production? %>
+### 🚀 Production Mode
+- Optimized for performance
+- Assets are precompiled
+- Error tracking enabled
+<% end %>
+
+## Dynamic Navigation
+
+Return to other pages:
+- [Home Page](/)
+- [Test Page](/test)
+
+---
+
+<% current_time = Time.current %>
+*This page was dynamically generated at <%= current_time.strftime("%H:%M:%S") %> on <%= current_time.strftime("%Y-%m-%d") %>*
+
+## Code Example
+
+Here's how this dynamic content works:
+
+```erb
+**Today's Date**: <%= Date.current.strftime("%A, %B %d, %Y") %>
+
+<% if Rails.env.development? %>
+This content only shows in development!
+<% end %>
+```
+
+## Features Demonstrated
+
+1. **Date and Time**: Dynamic timestamps
+2. **Environment Info**: Rails and Ruby versions, environment details
+3. **Loops**: Generating content with ERB loops
+4. **Conditionals**: Environment-specific content
+5. **Variables**: Using ERB variables within markdown
+6. **Navigation**: Dynamic link generation
