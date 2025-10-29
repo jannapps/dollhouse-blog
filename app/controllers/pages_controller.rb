@@ -2,20 +2,15 @@ require "redcarpet"
 
 class PagesController < ApplicationController
   def show
-    # Get the path from the route parameter and sanitize it
-    page_name = sanitize_path(params[:path])
-    return render_not_found unless page_name
+    # Get the path from the route parameter and validate it through whitelist
+    requested_page = sanitized_page_param
+    return render_not_found unless requested_page
 
-    # Construct the path to the markdown file
-    markdown_path = Rails.root.join("posts", "#{page_name}.md")
+    # Get the safe file path from pre-approved whitelist
+    markdown_path = allowed_pages[requested_page]
+    return render_not_found unless markdown_path
 
-    # Ensure the path is within the posts directory (prevent path traversal)
-    unless markdown_path.to_s.start_with?(Rails.root.join("posts").to_s)
-      return render_not_found
-    end
-
-    if File.exist?(markdown_path)
-      markdown_content = File.read(markdown_path)
+    markdown_content = File.read(markdown_path)
 
       # Initialize Redcarpet markdown processor with HTML rendering
       renderer = Redcarpet::Render::HTML.new(
@@ -34,26 +29,49 @@ class PagesController < ApplicationController
         superscript: true
       )
 
-      @content = markdown.render(markdown_content).html_safe
-      @page_title = page_name.titleize
-    else
-      render_not_found
-    end
+    @content = markdown.render(markdown_content).html_safe
+    @page_title = requested_page.titleize
   end
 
   private
 
-  def sanitize_path(path)
-    # Remove any path traversal attempts and ensure only alphanumeric, dash, underscore
-    return nil if path.blank?
+  def sanitized_page_param
+    # Extract and validate page parameter through strict whitelist
+    raw_param = params[:path]
+    return nil if raw_param.blank?
 
-    # Only allow safe characters for filenames
-    sanitized = path.gsub(/[^a-zA-Z0-9\-_]/, "")
+    # Only allow safe characters: letters, numbers, hyphens, underscores
+    return nil unless raw_param.match?(/\A[a-zA-Z0-9\-_]+\z/)
 
-    # Return nil if the sanitized path is empty or different from original (indicates malicious input)
-    return nil if sanitized.blank? || sanitized != path
+    # Additional length check
+    return nil if raw_param.length > 100
 
-    sanitized
+    # Only return if it exists in our pre-approved whitelist
+    return raw_param if allowed_pages.key?(raw_param)
+
+    nil
+  end
+
+  def allowed_pages
+    # Static mapping of page names to file paths - completely isolates user input
+    # This method scans for existing markdown files and creates a safe mapping
+    @allowed_pages ||= begin
+      pages = {}
+      posts_dir = Rails.root.join("posts")
+
+      # Only scan files that exist and are within the posts directory
+      Dir.glob(posts_dir.join("*.md")).each do |file_path|
+        next unless File.file?(file_path)
+        next unless file_path.start_with?(posts_dir.to_s)
+
+        page_name = File.basename(file_path, ".md")
+        next unless page_name.match?(/\A[a-zA-Z0-9\-_]+\z/)
+
+        pages[page_name] = file_path
+      end
+
+      pages
+    end
   end
 
   def render_not_found
