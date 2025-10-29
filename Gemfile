@@ -25,6 +25,9 @@ gem "jbuilder", "~> 2.12"
 # Performance
 gem "bootsnap", "~> 1.18", require: false
 
+# Markdown processing
+gem "redcarpet", "~> 3.6"
+
 # Windows timezone support
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
