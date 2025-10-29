@@ -24,3 +24,10 @@ Thumbs.db
 
 # Nix
 result
+
+# User content - ignore all posts except core examples
+posts/*
+!posts/home.md
+!posts/test.md
+!posts/layout-example.md
+!posts/dynamic-example.md.erb
