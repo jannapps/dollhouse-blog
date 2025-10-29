@@ -1,0 +1,26 @@
+# Dependencies
+.gems/
+vendor/bundle/
+
+# Rails specific
+log/*.log
+tmp/
+storage/
+
+# Environment files
+.env
+.env.local
+
+# Database
+db/*.sqlite3
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Nix
+result
