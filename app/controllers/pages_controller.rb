@@ -1,6 +1,8 @@
 require "redcarpet"
+require "yaml"
 
 class PagesController < ApplicationController
+  helper_method :render_widget
   def show
     # Get the path from the route parameter and validate it through whitelist
     requested_page = sanitized_page_param
@@ -10,21 +12,27 @@ class PagesController < ApplicationController
     markdown_path = allowed_pages[requested_page]
     return render_not_found unless markdown_path
 
-    # Read the file content
+    # Read and parse the file content
     raw_content = File.read(markdown_path)
+    frontmatter, content = parse_frontmatter(raw_content)
 
-    # Check if this is an ERB file and process accordingly
+    # Set page metadata
+    @page_title = frontmatter["title"] || requested_page.titleize
+    @layout_name = frontmatter["layout"]
+    @widget_config = extract_widget_config(frontmatter)
+
+    # Process content through ERB if needed
     if markdown_path.end_with?(".md.erb")
-      # Process ERB first, then markdown
-      erb_content = process_erb(raw_content)
-      markdown_content = render_markdown(erb_content)
-    else
-      # Process as regular markdown
-      markdown_content = render_markdown(raw_content)
+      content = process_erb(content)
     end
 
-    @content = markdown_content.html_safe
-    @page_title = requested_page.titleize
+    # Render markdown content
+    @content = render_markdown(content).html_safe
+
+    # Use custom layout if specified, otherwise default
+    if @layout_name && layout_exists?(@layout_name)
+      render template: "layouts/content/#{@layout_name}", layout: "application"
+    end
   end
 
   private
@@ -44,6 +52,60 @@ class PagesController < ApplicationController
     return raw_param if allowed_pages.key?(raw_param)
 
     nil
+  end
+
+  def parse_frontmatter(content)
+    # Check if content starts with YAML frontmatter
+    if content.start_with?("---\n")
+      # Find the closing ---
+      end_marker = content.index("\n---\n", 4)
+      if end_marker
+        frontmatter_text = content[4...end_marker]
+        remaining_content = content[end_marker + 5..-1] || ""
+
+        begin
+          frontmatter = YAML.safe_load(frontmatter_text) || {}
+        rescue Psych::SyntaxError
+          frontmatter = {}
+        end
+
+        return [ frontmatter, remaining_content ]
+      end
+    end
+
+    # No frontmatter found
+    [ {}, content ]
+  end
+
+  def extract_widget_config(frontmatter)
+    # Extract widget configuration from frontmatter
+    config = {}
+    frontmatter.each do |key, value|
+      # Any key that doesn't start with reserved prefixes becomes a widget slot
+      unless %w[layout title].include?(key)
+        config[key] = value
+      end
+    end
+    config
+  end
+
+  def layout_exists?(layout_name)
+    # Check if the layout template exists
+    layout_path = Rails.root.join("app", "views", "layouts", "content", "#{layout_name}.html.erb")
+    File.exist?(layout_path)
+  end
+
+  def render_widget(widget_name, options = {})
+    # Render a widget partial with error handling
+    return "" if widget_name.blank?
+
+    widget_path = "widgets/#{widget_name}"
+    if lookup_context.exists?(widget_path, [], true)
+      render(partial: widget_path, locals: options)
+    else
+      # Graceful fallback for missing widgets
+      content_tag(:div, "Widget '#{widget_name}' not found", class: "widget-error")
+    end
   end
 
   def process_erb(content)

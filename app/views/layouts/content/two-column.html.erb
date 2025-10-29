@@ -1,0 +1,45 @@
+<div class="layout-two-column">
+  <main class="main-content">
+    <%= @content %>
+  </main>
+  
+  <aside class="sidebar">
+    <% if @widget_config["sidebar"] %>
+      <%= render_widget(@widget_config["sidebar"]) %>
+    <% end %>
+  </aside>
+</div>
+
+<style>
+.layout-two-column {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.main-content {
+  padding-right: 1rem;
+}
+
+.sidebar {
+  padding-left: 1rem;
+  border-left: 1px solid #e5e7eb;
+}
+
+@media (max-width: 768px) {
+  .layout-two-column {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .sidebar {
+    border-left: none;
+    border-top: 1px solid #e5e7eb;
+    padding-left: 0;
+    padding-top: 1rem;
+  }
+}
+</style>
