@@ -11,4 +11,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#index"
+
+  # Dynamic route for markdown pages (must come last to avoid conflicts)
+  get "*path", to: "pages#show", constraints: lambda { |request|
+    # Only match if the path corresponds to an existing markdown file
+    file_path = Rails.root.join("posts", "#{request.path_parameters[:path]}.md")
+    File.exist?(file_path)
+  }
 end
