@@ -34,9 +34,24 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 group :development, :test do
   # Debugging
   gem "debug", "~> 1.11", platforms: %i[ mri windows ], require: "debug/prelude"
+
+  # Security auditing
+  gem "bundler-audit", "~> 0.9", require: false
+
+  # Static analysis for security vulnerabilities
+  gem "brakeman", "~> 6.0", require: false
+
+  # Code linting and formatting
+  gem "rubocop-rails-omakase", "~> 1.1", require: false
 end
 
 group :development do
   # Console on exceptions
   gem "web-console", "~> 4.2"
+end
+
+group :test do
+  # System testing
+  gem "capybara", "~> 3.40"
+  gem "selenium-webdriver", "~> 4.20"
 end
