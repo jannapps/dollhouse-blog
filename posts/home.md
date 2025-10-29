@@ -21,3 +21,7 @@ This blog system demonstrates how to build a simple, fast, and maintainable blog
 ---
 
 *This homepage is now rendered from `posts/home.md` using markdown!*
+
+## Testing Internal Links
+
+Let's test if internal markdown links work: [Example Internal Link](/test)
