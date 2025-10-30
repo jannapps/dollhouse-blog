@@ -40,5 +40,5 @@ RUN nix-shell --run " \
     "
 
 
-EXPOSE 9955
-CMD ["nix-shell", "--run", "bundle exec bin/rails server"]
+EXPOSE 80
+CMD ["nix-shell", "--run", "bundle exec bin/rails server -p 80"]
