@@ -1,3 +1,9 @@
+---
+layout: two-column
+title: Dollhouse Blog
+sidebar: post-list
+---
+
 # Welcome to Dollhouse Blog!
 
 A simple markdown-based blog built with Ruby on Rails
@@ -10,6 +16,7 @@ A simple markdown-based blog built with Ruby on Rails
 
 - **Markdown-based content management** - All content is written in simple, readable markdown files
 - **Dynamic markdown content** - ERB support for dynamic content within markdown files
+- **Layout system** - Clean YAML frontmatter for responsive layouts and widgets
 - **Modern web design** - Responsive design with beautiful typography and modern CSS
 - **No database required for content** - Content is stored as markdown files in the filesystem  
 - **Ruby on Rails backend** - Powerful, mature web framework
@@ -23,8 +30,19 @@ This blog system demonstrates how to build a simple, fast, and maintainable blog
 
 *This homepage is now rendered from `posts/home.md` using markdown!*
 
-## Testing Links
+## Examples & Demos
 
-Let's test if internal markdown links work: 
-- [Example Internal Link](/test)
-- [Dynamic Content Example](/dynamic-example) - **NEW!** Dynamic ERB-powered markdown
+Explore the different capabilities of this blog system:
+
+### Core Examples
+- [Test Page](/test) - Simple static markdown example
+- [Dynamic Content Example](/dynamic-example) - ERB-powered dynamic markdown
+- [Layout System Example](/layout-example) - **NEW!** Two-column layout with widgets
+- [Two-Column with Sidebar](/layout-ex-2col-sidebar) - Layout with sidebar widget
+- [Two-Column Content](/layout-ex-2col) - Multiple markdown content sections
+- [Post List Widget](/layout-ex-post-list) - Automatic post navigation
+
+### Features Demonstrated
+- **Static Markdown**: Clean, readable content files
+- **Dynamic Content**: Real-time data, loops, conditionals with ERB
+- **Layout System**: YAML frontmatter for responsive layouts and reusable widgets

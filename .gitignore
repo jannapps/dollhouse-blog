@@ -29,3 +29,6 @@ result
 posts/*
 !posts/home.md
 !posts/test.md
+!posts/dynamic-example.md.erb
+!posts/layout-example.md
+!posts/layout-ex-*
