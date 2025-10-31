@@ -1,0 +1,72 @@
+<div class="widget-post-list">
+  <h3>All Posts</h3>
+  <ul class="post-list">
+    <% get_all_posts.each do |post_name, post_info| %>
+      <li>
+        <a href="/<%= post_name %>">
+          <span class="post-title"><%= post_info[:title] %></span>
+          <% if post_info[:dynamic] %>
+            <span class="post-type">ERB</span>
+          <% end %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<style>
+.widget-post-list {
+  background: rgba(255, 255, 255, 0.6);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(52, 152, 219, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.widget-post-list h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.widget-post-list .post-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.widget-post-list .post-list li {
+  margin-bottom: 0.75rem;
+}
+
+.widget-post-list .post-list a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.widget-post-list .post-list a:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+.widget-post-list .post-title {
+  flex-grow: 1;
+}
+
+.widget-post-list .post-type {
+  font-size: 0.75rem;
+  background: rgba(52, 152, 219, 0.1);
+  color: #3498db;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+</style>

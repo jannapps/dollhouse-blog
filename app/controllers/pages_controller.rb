@@ -2,7 +2,6 @@ require "redcarpet"
 require "yaml"
 
 class PagesController < ApplicationController
-  helper_method :render_widget
   def show
     # Get the path from the route parameter and validate it through whitelist
     requested_page = sanitized_page_param
@@ -26,8 +25,9 @@ class PagesController < ApplicationController
       content = process_erb(content)
     end
 
-    # Render markdown content
-    @content = render_markdown(content).html_safe
+    # Parse content sections and render markdown
+    @content_sections = parse_content_sections(content)
+    @content = @content_sections["main"] || render_markdown(content).html_safe
 
     # Use custom layout if specified, otherwise default
     if @layout_name && layout_exists?(@layout_name)
@@ -95,19 +95,35 @@ class PagesController < ApplicationController
     File.exist?(layout_path)
   end
 
-  def render_widget(widget_name, options = {})
-    # Render a widget partial with error handling
-    return "" if widget_name.blank?
+  def parse_content_sections(content)
+    # Parse content sections using ---section: name--- delimiters
+    sections = {}
 
-    widget_path = "widgets/#{widget_name}"
-    if lookup_context.exists?(widget_path, [], true)
-      render(partial: widget_path, locals: options)
+    # Split content by section delimiters
+    parts = content.split(/^---section:\s*(\w+)---$/m)
+
+    if parts.length == 1
+      # No sections found, treat entire content as main
+      sections["main"] = render_markdown(content).html_safe
     else
-      # Graceful fallback for missing widgets
-      content_tag(:div, "Widget '#{widget_name}' not found", class: "widget-error")
-    end
-  end
+      # First part (before any section delimiter) is main content
+      if parts[0].strip.present?
+        sections["main"] = render_markdown(parts[0].strip).html_safe
+      end
 
+      # Process named sections
+      (1...parts.length).step(2) do |i|
+        section_name = parts[i].strip
+        section_content = parts[i + 1]&.strip || ""
+
+        if section_content.present?
+          sections[section_name] = render_markdown(section_content).html_safe
+        end
+      end
+    end
+
+    sections
+  end
   def process_erb(content)
     # Process ERB content within the controller context to access helpers and instance variables
     ERB.new(content).result(binding)
