@@ -25,8 +25,9 @@ class PagesController < ApplicationController
       content = process_erb(content)
     end
 
-    # Render markdown content
-    @content = render_markdown(content).html_safe
+    # Parse content sections and render markdown
+    @content_sections = parse_content_sections(content)
+    @content = @content_sections["main"] || render_markdown(content).html_safe
 
     # Use custom layout if specified, otherwise default
     if @layout_name && layout_exists?(@layout_name)
@@ -92,6 +93,36 @@ class PagesController < ApplicationController
     # Check if the layout template exists
     layout_path = Rails.root.join("app", "views", "layouts", "content", "#{layout_name}.html.erb")
     File.exist?(layout_path)
+  end
+
+  def parse_content_sections(content)
+    # Parse content sections using ---section: name--- delimiters
+    sections = {}
+    
+    # Split content by section delimiters
+    parts = content.split(/^---section:\s*(\w+)---$/m)
+    
+    if parts.length == 1
+      # No sections found, treat entire content as main
+      sections["main"] = render_markdown(content).html_safe
+    else
+      # First part (before any section delimiter) is main content
+      if parts[0].strip.present?
+        sections["main"] = render_markdown(parts[0].strip).html_safe
+      end
+      
+      # Process named sections
+      (1...parts.length).step(2) do |i|
+        section_name = parts[i].strip
+        section_content = parts[i + 1]&.strip || ""
+        
+        if section_content.present?
+          sections[section_name] = render_markdown(section_content).html_safe
+        end
+      end
+    end
+    
+    sections
   end
 
 

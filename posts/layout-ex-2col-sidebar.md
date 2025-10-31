@@ -1,10 +1,10 @@
 ---
 layout: two-column
-title: Layout System Example
+title: Two-Column Layout with Sidebar
 sidebar: recent-posts
 ---
 
-# Layout System Example
+# Two-Column Layout with Sidebar
 
 This page demonstrates the new layout system with ultra-clean markdown syntax.
 

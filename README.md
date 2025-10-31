@@ -166,11 +166,49 @@ dollhouse-blog/
 └── README.md                       # This file
 ```
 
+## 🎨 Layout System
+
+The blog supports a flexible layout system using YAML frontmatter to specify different page layouts and widgets.
+
+### Available Layouts
+- ✅ **single-column** - Clean single column layout for focused content
+- ✅ **two-column** - Main content with sidebar for widgets
+
+### Planned Layouts
+- ⭕ **three-column** - Main content with dual sidebars (nav + widgets)
+- ⭕ **card-grid** - Grid layout for post listings, galleries, or portfolios
+- ⭕ **masonry** - Pinterest-style staggered grid for mixed content sizes
+- ⭕ **full-width** - Edge-to-edge content without container constraints
+- ⭕ **narrow** - Extra-narrow layout for long-form reading
+- ⭕ **split-screen** - Half content, half media layout
+- ⭕ **hero-banner** - Large header section with content below
+- ⭕ **timeline** - Chronological content with date markers
+- ⭕ **comparison** - Side-by-side content blocks
+- ⭕ **landing-page** - Multi-section layout with different backgrounds
+- ⭕ **mobile-first-stack** - Responsive stacking layout
+- ⭕ **sidebar-overlay** - Sidebar becomes slide-out drawer on mobile
+
+### Using Layouts
+Add YAML frontmatter to your markdown files:
+
+```yaml
+---
+layout: two-column
+title: My Page Title
+sidebar: recent-posts
+---
+
+# My Content
+
+This content will be displayed in a two-column layout with a sidebar widget.
+```
+
 ## 🔍 Example Pages
 
 - **Homepage**: `/` - Static markdown content with feature overview
 - **Test Page**: `/test` - Simple static markdown example
 - **Dynamic Example**: `/dynamic-example` - Comprehensive ERB features demo
+- **Layout Example**: `/layout-example` - Two-column layout with sidebar widget
 
 ## 🧪 CI/CD Pipeline
 

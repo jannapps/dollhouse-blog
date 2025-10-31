@@ -1,0 +1,39 @@
+<!-- Two column layout for content sections -->
+<div class="container layout-two-column-content">
+  <div class="left-column">
+    <%= styled_content(@content_sections["left"] || @content_sections["main"]) %>
+  </div>
+  
+  <div class="right-column">
+    <%= styled_content(@content_sections["right"] || content_tag(:div, "No right column content provided", class: "placeholder-text")) %>
+  </div>
+</div>
+
+<style>
+.layout-two-column-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  max-width: 1200px;
+}
+
+.left-column, .right-column {
+  /* Each column inherits all the beautiful typography from application.css */
+}
+
+.placeholder-text {
+  color: #95a5a6;
+  font-style: italic;
+  padding: 1rem;
+  background: rgba(149, 165, 166, 0.1);
+  border-radius: 8px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .layout-two-column-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+</style>
