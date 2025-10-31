@@ -42,7 +42,7 @@ module ApplicationHelper
       begin
         content = File.read(file_path)
         title = extract_title_from_content(content, page_name)
-        
+
         posts[page_name] = {
           title: title,
           dynamic: file_path.end_with?(".md.erb"),
