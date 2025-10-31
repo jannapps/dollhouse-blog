@@ -5,12 +5,14 @@ A simple, fast, and maintainable blog system built with Ruby on Rails that uses 
 ## ✨ Features
 
 ### 📝 Content Management
+
 - **Markdown-based content** - Write content in simple, readable markdown files
 - **Dynamic markdown content** - Use ERB syntax within `.md.erb` files for dynamic content
 - **Internal linking** - Seamless navigation between markdown pages
 - **No database required for content** - All content stored as files in the filesystem
 
 ### 🔧 Dynamic Content Capabilities
+
 - **Real-time data** - Current date, time, Rails version, environment info
 - **ERB integration** - Full access to Rails helpers, variables, and environment
 - **Conditional content** - Show different content based on environment or conditions
@@ -18,18 +20,21 @@ A simple, fast, and maintainable blog system built with Ruby on Rails that uses 
 - **Rails helpers** - Access to all Rails view helpers within markdown
 
 ### 🎨 Design & User Experience
+
 - **Modern web design** - Responsive design with beautiful typography
 - **Clean URLs** - Simple routing like `/page-name` for markdown files
 - **Fast loading** - File-based content with efficient caching
 - **Mobile-friendly** - Responsive design that works on all devices
 
 ### 🔒 Security & Quality
+
 - **Security-first design** - Whitelist-based file access prevents path traversal attacks
 - **Zero security warnings** - Passes Brakeman security scanning
 - **Input validation** - Strict validation of all user inputs
 - **CI/CD pipeline** - Automated security scanning, linting, and testing
 
 ### ⚡ Performance & Development
+
 - **Fast development** - Hot reloading in development mode
 - **Reproducible environment** - NixOS shell.nix for consistent development setup
 - **Comprehensive testing** - Full CI pipeline with security, style, and unit tests
@@ -48,38 +53,44 @@ A simple, fast, and maintainable blog system built with Ruby on Rails that uses 
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - NixOS or Nix package manager
 - Git
 
 ### Setup
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/jannapps/dollhouse-blog.git
    cd dollhouse-blog
    ```
 
 2. **Enter development environment**
+
    ```bash
    nix-shell
    ```
 
 3. **Install dependencies**
+
    ```bash
    bundle install
    ```
 
 4. **Start the server**
+
    ```bash
    bin/rails server --port=9955
    ```
 
 5. **Visit your blog**
-   Open http://localhost:9955 in your browser
+   Open <http://localhost:9955> in your browser
 
 ## 📖 Creating Content
 
 ### Static Markdown Pages
+
 Create `.md` files in the `posts/` directory:
 
 ```markdown
@@ -93,6 +104,7 @@ This is a simple markdown page with **bold text** and [links](/).
 ```
 
 ### Dynamic Markdown Pages
+
 Create `.md.erb` files for dynamic content:
 
 ```markdown
@@ -112,7 +124,9 @@ Debug features are available!
 ```
 
 ### URL Structure
+
 Files are automatically accessible via clean URLs:
+
 - `posts/about.md` → `/about`
 - `posts/contact.md.erb` → `/contact`
 - `posts/blog-post.md` → `/blog-post`
@@ -120,6 +134,7 @@ Files are automatically accessible via clean URLs:
 ## 🔧 Development Workflow
 
 ### Local CI Testing
+
 Always run the complete CI suite before pushing:
 
 ```bash
@@ -131,12 +146,14 @@ nix-shell --run "bin/rails test"
 ```
 
 ### Git Workflow
+
 1. Create feature branches for all changes
 2. Run CI locally before committing
 3. Use squash merges to main branch
 4. Keep commit history clean and descriptive
 
 ### Security Guidelines
+
 - Never use user parameters directly in file operations
 - Use whitelist-based file access with pre-approved mappings
 - Implement strict input validation (alphanumeric, dash, underscore only)
@@ -236,8 +253,32 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 🔗 Links
 
-- **Repository**: https://github.com/jannapps/dollhouse-blog
-- **Live Demo**: http://localhost:9955 (after running locally)
+- **Repository**: <https://github.com/jannapps/dollhouse-blog>
+- **Live Demo**: <http://localhost:9955> (after running locally)
+
+## Using Docker or Podman
+
+Note that this will build a production server.
+
+1. Generate a secret key
+
+   ```bash
+   ruby -e "require 'securerandom' puts \"SECRET_KEY_BASE=#{SecureRandom.hex(64)}\"" > .env
+   ```
+
+2. Build the container
+
+   ```bash
+   docker build -t dollhouse_blog . 
+   ```
+
+3. Run the container
+
+   ```bash
+   docker run -it -p 80:80 dollhouse_blog
+   ```
+
+   ``-it`` is required as otherwise you won't be able to use CTRL-C to exit the server.
 
 ---
 

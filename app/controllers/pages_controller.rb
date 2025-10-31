@@ -124,8 +124,6 @@ class PagesController < ApplicationController
 
     sections
   end
-
-
   def process_erb(content)
     # Process ERB content within the controller context to access helpers and instance variables
     ERB.new(content).result(binding)

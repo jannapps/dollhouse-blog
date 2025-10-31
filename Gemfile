@@ -29,7 +29,7 @@ gem "bootsnap", "~> 1.18", require: false
 gem "redcarpet", "~> 3.6"
 
 # Windows timezone support
-gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "tzinfo-data"
 
 group :development, :test do
   # Debugging
