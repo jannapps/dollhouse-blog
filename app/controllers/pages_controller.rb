@@ -2,6 +2,7 @@ require "redcarpet"
 require "yaml"
 
 class PagesController < ApplicationController
+  helper_method :render_widget
   def show
     # Get the path from the route parameter and validate it through whitelist
     requested_page = sanitized_page_param
