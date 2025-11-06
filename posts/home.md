@@ -38,7 +38,7 @@ Explore the different capabilities of this blog system:
 - [Test Page](/test) - Simple static markdown example
 - [Dynamic Content Example](/ex-dynamic) - ERB-powered dynamic markdown
 - [Layout System Example](/ex-layout) - **NEW!** Two-column layout with widgets
-- [Two-Column with Sidebar](/ex-2col-sidebar) - Layout with sidebar widget
+- [Two-Column with Sidebar](/ex-2col-sidebar) - **IMPROVED!** Two content columns plus sidebar
 - [Two-Column Content](/ex-2col) - Multiple markdown content sections
 - [Post List Widget](/ex-post-list) - Automatic post navigation
 

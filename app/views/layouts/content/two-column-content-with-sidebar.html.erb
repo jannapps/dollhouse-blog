@@ -1,0 +1,68 @@
+<!-- Three column layout: two content columns plus sidebar -->
+<div class="container layout-two-column-content-with-sidebar">
+  <div class="left-column">
+    <%= styled_content(@content_sections["left"] || @content_sections["main"]) %>
+  </div>
+  
+  <div class="right-column">
+    <%= styled_content(@content_sections["right"] || content_tag(:div, "No right column content provided", class: "placeholder-text")) %>
+  </div>
+  
+  <aside class="sidebar">
+    <% if @widget_config["sidebar"] %>
+      <%= render_widget(@widget_config["sidebar"]) %>
+    <% end %>
+  </aside>
+</div>
+
+<style>
+.layout-two-column-content-with-sidebar {
+  display: grid;
+  grid-template-columns: 1fr 1fr 300px;
+  gap: 2rem;
+  max-width: 1400px; /* Wider to accommodate three columns */
+}
+
+.left-column, .right-column {
+  /* Each column inherits all the beautiful typography from application.css */
+}
+
+.sidebar {
+  padding-left: 2rem;
+  border-left: 2px solid rgba(52, 152, 219, 0.2);
+  margin-left: 1rem;
+}
+
+.placeholder-text {
+  color: #95a5a6;
+  font-style: italic;
+  padding: 1rem;
+  background: rgba(149, 165, 166, 0.1);
+  border-radius: 8px;
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .layout-two-column-content-with-sidebar {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+  
+  .sidebar {
+    grid-column: 1 / -1;
+    border-left: none;
+    border-top: 2px solid rgba(52, 152, 219, 0.2);
+    padding-left: 0;
+    padding-top: 1.5rem;
+    margin-left: 0;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .layout-two-column-content-with-sidebar {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+</style>
