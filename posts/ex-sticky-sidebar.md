@@ -2,7 +2,7 @@
 layout: two-column
 title: Sticky Sidebar Demo
 sidebar:
-  - example-posts
+  - posts-matching(^ex-, Example Posts)
   - site-info
   - test-widget
 ---

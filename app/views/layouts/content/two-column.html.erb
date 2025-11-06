@@ -14,14 +14,16 @@
 <style>
 .layout-two-column {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 2rem;
+  grid-template-columns: 1fr 350px;
+  gap: 1.5rem;
   /* Remove conflicting styles, inherit from .container */
-  max-width: 1200px; /* Wider for two-column layout */
 }
 
 .main-content {
   /* Content inherits all the beautiful typography from application.css */
+  max-width: 100%;
+  overflow-wrap: break-word;
+  min-width: 0;
 }
 
 .sidebar {

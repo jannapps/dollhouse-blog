@@ -2,7 +2,7 @@
 layout: two-column
 title: Multiple Widgets Demo
 sidebar:
-  - recent-posts
+  - recent-posts(5)
   - site-info
   - test-widget
 ---

@@ -3,10 +3,14 @@ require "redcarpet"
 
 module ApplicationHelper
   def render_widget(widget_name, options = {})
-    # Render a widget with support for both markdown and ERB formats
+    # Render a widget with support for builtins, markdown, and ERB formats
     return "" if widget_name.blank?
 
-    # First, check for markdown widgets
+    # First, check for builtin widget calls
+    builtin_result = render_builtin_widget(widget_name)
+    return builtin_result if builtin_result
+
+    # Then, check for markdown widgets
     markdown_widget = find_markdown_widget(widget_name)
     if markdown_widget
       return render_markdown_widget(markdown_widget, options)
@@ -38,6 +42,52 @@ module ApplicationHelper
     widgets_html.join.html_safe
   end
 
+  def render_builtin_widget(widget_call)
+    # Handle builtin widget calls with function syntax
+    # Examples: "post-list", "recent-posts(5)", "posts-matching(^ex-, Example Posts)"
+
+    # Define builtin widgets
+    builtins = {
+      "post-list" => -> { post_list },
+      "recent-posts" => ->(count = 5) { recent_posts(count.to_i) },
+      "posts-matching" => ->(pattern, title) { posts_matching(Regexp.new(pattern), title) }
+    }
+
+    # Parse function call syntax
+    if widget_call.include?("(") && widget_call.end_with?(")")
+      # Function call with parameters: "recent-posts(5)"
+      function_name = widget_call.split("(").first
+      params_string = widget_call[widget_call.index("(") + 1...-1]
+      params = params_string.split(",").map(&:strip)
+
+      builtin_func = builtins[function_name]
+      if builtin_func
+        begin
+          result = builtin_func.call(*params)
+          html_content = render_widget_markdown(result)
+          return content_tag(:div, html_content.html_safe, class: [ "widget", "builtin-widget", "widget-#{function_name}" ].join(" "))
+        rescue => e
+          return content_tag(:div, "Error in builtin widget '#{function_name}': #{e.message}", class: "widget-error")
+        end
+      end
+    else
+      # Simple function call: "post-list"
+      builtin_func = builtins[widget_call]
+      if builtin_func
+        begin
+          result = builtin_func.call
+          html_content = render_widget_markdown(result)
+          return content_tag(:div, html_content.html_safe, class: [ "widget", "builtin-widget", "widget-#{widget_call}" ].join(" "))
+        rescue => e
+          return content_tag(:div, "Error in builtin widget '#{widget_call}': #{e.message}", class: "widget-error")
+        end
+      end
+    end
+
+    # Not a builtin widget
+    nil
+  end
+
   def styled_content(content)
     # Automatically wrap content in beautiful markdown styling
     content_tag(:div, content.html_safe, class: "markdown-content")
@@ -47,37 +97,48 @@ module ApplicationHelper
   def post_list
     # Generate markdown list of all posts with clean formatting
     posts = get_all_posts
-    return "No posts found." if posts.empty?
+    return "# All Posts\n\nNo posts found." if posts.empty?
 
-    posts.map do |post_name, post_info|
+    content = "# All Posts\n\n"
+    content += posts.map do |post_name, post_info|
       link_text = post_info[:title]
       dynamic_indicator = post_info[:dynamic] ? " ⚡" : ""
       "- [#{link_text}](/#{post_name})#{dynamic_indicator}"
     end.join("\n")
+    content
   end
 
-  def posts_matching(pattern)
-    # Generate markdown list of posts matching a pattern
+  def posts_matching(pattern, title)
+    # Generate markdown list of posts matching a pattern with user-provided title
     posts = get_all_posts.select { |post_name, _| post_name.match?(pattern) }
-    return "No posts match the pattern." if posts.empty?
 
-    posts.map do |post_name, post_info|
+    return "# #{title}\n\nNo posts match the pattern." if posts.empty?
+
+    content = "# #{title}\n\n"
+    content += posts.map do |post_name, post_info|
       link_text = post_info[:title]
       dynamic_indicator = post_info[:dynamic] ? " ⚡" : ""
       "- [#{link_text}](/#{post_name})#{dynamic_indicator}"
     end.join("\n")
+    content
   end
 
   def recent_posts(count = 5)
     # Generate markdown list of recent posts (first N posts from sorted list)
     posts = get_all_posts.first(count)
-    return "No posts found." if posts.empty?
 
-    posts.map do |post_name, post_info|
+    # Dynamic header based on count
+    header = "Top #{count} Posts"
+
+    return "# #{header}\n\nNo posts found." if posts.empty?
+
+    content = "# #{header}\n\n"
+    content += posts.map do |post_name, post_info|
       link_text = post_info[:title]
       dynamic_indicator = post_info[:dynamic] ? " ⚡" : ""
       "- [#{link_text}](/#{post_name})#{dynamic_indicator}"
     end.join("\n")
+    content
   end
 
   def get_all_posts

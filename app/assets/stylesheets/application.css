@@ -112,6 +112,10 @@ body {
   border: 1px solid #e9ecef;
   overflow-x: auto;
   margin: 1rem 0;
+  max-width: 800px;
+  box-sizing: border-box;
+  white-space: pre;
+  word-wrap: normal;
 }
 
 .markdown-content pre code {
@@ -131,7 +135,8 @@ body {
   margin-bottom: 1.5rem;
 }
 
-.markdown-widget h1 {
+/* Shared widget typography for both markdown and builtin widgets */
+.markdown-widget h1, .builtin-widget h1 {
   margin: 0 0 1rem 0;
   font-size: 1.25rem;
   font-weight: 600;
@@ -140,48 +145,49 @@ body {
   padding: 0;
 }
 
-.markdown-widget h2 {
+.markdown-widget h2, .builtin-widget h2 {
   margin: 1rem 0 0.5rem 0;
   font-size: 1.1rem;
   font-weight: 600;
   color: #34495e;
 }
 
-.markdown-widget h3, .markdown-widget h4, .markdown-widget h5, .markdown-widget h6 {
+.markdown-widget h3, .markdown-widget h4, .markdown-widget h5, .markdown-widget h6,
+.builtin-widget h3, .builtin-widget h4, .builtin-widget h5, .builtin-widget h6 {
   margin: 0.75rem 0 0.5rem 0;
   font-size: 1rem;
   font-weight: 600;
   color: #34495e;
 }
 
-.markdown-widget p {
+.markdown-widget p, .builtin-widget p {
   margin: 0.5rem 0;
   font-size: 0.95rem;
   line-height: 1.6;
 }
 
-.markdown-widget ul, .markdown-widget ol {
+.markdown-widget ul, .markdown-widget ol, .builtin-widget ul, .builtin-widget ol {
   margin: 0.5rem 0;
   padding-left: 1.5rem;
 }
 
-.markdown-widget li {
+.markdown-widget li, .builtin-widget li {
   margin-bottom: 0.5rem;
 }
 
-.markdown-widget a {
+.markdown-widget a, .builtin-widget a {
   color: #3498db;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s ease;
 }
 
-.markdown-widget a:hover {
+.markdown-widget a:hover, .builtin-widget a:hover {
   color: #2980b9;
   text-decoration: underline;
 }
 
-.markdown-widget code {
+.markdown-widget code, .builtin-widget code {
   background: rgba(52, 152, 219, 0.1);
   color: #3498db;
   padding: 0.2rem 0.4rem;
@@ -207,8 +213,6 @@ body {
 
 /* Widget-specific styles */
 .widget-post-list ul, .widget-recent-posts ul {
-  list-style: none;
-  padding: 0;
   margin: 0.5rem 0;
 }
 
@@ -223,25 +227,17 @@ body {
   align-self: flex-start;
   max-height: calc(100vh - 4rem);
   overflow-y: auto;
+  min-width: 300px;
 }
 
-/* Smooth scrolling for sidebar overflow */
+/* Hidden scrollbar for sidebar - keeps scroll functionality but invisible */
+.sidebar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
 .sidebar::-webkit-scrollbar {
-  width: 4px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-  background: rgba(52, 152, 219, 0.1);
-  border-radius: 2px;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-  background: rgba(52, 152, 219, 0.3);
-  border-radius: 2px;
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-  background: rgba(52, 152, 219, 0.5);
+  display: none; /* Chrome, Safari, Opera */
 }
 
 /* Error styling */
