@@ -1,7 +1,9 @@
 ---
 layout: two-column
 title: Dollhouse Blog
-sidebar: post-list
+sidebar:
+  - post-list
+  - site-info
 ---
 
 # Welcome to Dollhouse Blog!
@@ -41,6 +43,7 @@ Explore the different capabilities of this blog system:
 - [Two-Column with Sidebar](/ex-2col-sidebar) - **IMPROVED!** Two content columns plus sidebar
 - [Two-Column Content](/ex-2col) - Multiple markdown content sections
 - [Post List Widget](/ex-post-list) - Automatic post navigation
+- [Multiple Widgets Demo](/ex-multi-widgets) - **NEW!** Multiple sidebar widgets in one page
 
 ### Features Demonstrated
 - **Static Markdown**: Clean, readable content files

@@ -22,6 +22,22 @@ module ApplicationHelper
     end
   end
 
+  def render_widgets(widget_config_value, options = {})
+    # Render single widget or array of widgets
+    return "" if widget_config_value.blank?
+
+    # Handle both single widgets and arrays
+    widget_names = widget_config_value.is_a?(Array) ? widget_config_value : [ widget_config_value ]
+
+    # Render each widget
+    widgets_html = widget_names.map do |widget_name|
+      render_widget(widget_name, options)
+    end
+
+    # Join all widgets with consistent spacing
+    widgets_html.join.html_safe
+  end
+
   def styled_content(content)
     # Automatically wrap content in beautiful markdown styling
     content_tag(:div, content.html_safe, class: "markdown-content")
