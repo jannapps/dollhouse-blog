@@ -36,11 +36,11 @@ Explore the different capabilities of this blog system:
 
 ### Core Examples
 - [Test Page](/test) - Simple static markdown example
-- [Dynamic Content Example](/dynamic-example) - ERB-powered dynamic markdown
-- [Layout System Example](/layout-example) - **NEW!** Two-column layout with widgets
-- [Two-Column with Sidebar](/layout-ex-2col-sidebar) - Layout with sidebar widget
-- [Two-Column Content](/layout-ex-2col) - Multiple markdown content sections
-- [Post List Widget](/layout-ex-post-list) - Automatic post navigation
+- [Dynamic Content Example](/ex-dynamic) - ERB-powered dynamic markdown
+- [Layout System Example](/ex-layout) - **NEW!** Two-column layout with widgets
+- [Two-Column with Sidebar](/ex-2col-sidebar) - Layout with sidebar widget
+- [Two-Column Content](/ex-2col) - Multiple markdown content sections
+- [Post List Widget](/ex-post-list) - Automatic post navigation
 
 ### Features Demonstrated
 - **Static Markdown**: Clean, readable content files
