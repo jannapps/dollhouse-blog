@@ -43,6 +43,43 @@ module ApplicationHelper
     content_tag(:div, content.html_safe, class: "markdown-content")
   end
 
+  # Framework-specific helper functions for simple widget creation
+  def post_list
+    # Generate markdown list of all posts with clean formatting
+    posts = get_all_posts
+    return "No posts found." if posts.empty?
+
+    posts.map do |post_name, post_info|
+      link_text = post_info[:title]
+      dynamic_indicator = post_info[:dynamic] ? " ⚡" : ""
+      "- [#{link_text}](/#{post_name})#{dynamic_indicator}"
+    end.join("\n")
+  end
+
+  def posts_matching(pattern)
+    # Generate markdown list of posts matching a pattern
+    posts = get_all_posts.select { |post_name, _| post_name.match?(pattern) }
+    return "No posts match the pattern." if posts.empty?
+
+    posts.map do |post_name, post_info|
+      link_text = post_info[:title]
+      dynamic_indicator = post_info[:dynamic] ? " ⚡" : ""
+      "- [#{link_text}](/#{post_name})#{dynamic_indicator}"
+    end.join("\n")
+  end
+
+  def recent_posts(count = 5)
+    # Generate markdown list of recent posts (first N posts from sorted list)
+    posts = get_all_posts.first(count)
+    return "No posts found." if posts.empty?
+
+    posts.map do |post_name, post_info|
+      link_text = post_info[:title]
+      dynamic_indicator = post_info[:dynamic] ? " ⚡" : ""
+      "- [#{link_text}](/#{post_name})#{dynamic_indicator}"
+    end.join("\n")
+  end
+
   def get_all_posts
     # Get all posts with metadata for the post-list widget
     posts = {}

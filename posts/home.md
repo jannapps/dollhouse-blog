@@ -44,6 +44,7 @@ Explore the different capabilities of this blog system:
 - [Two-Column Content](/ex-2col) - Multiple markdown content sections
 - [Post List Widget](/ex-post-list) - Automatic post navigation
 - [Multiple Widgets Demo](/ex-multi-widgets) - **NEW!** Multiple sidebar widgets in one page
+- [Helper Functions Demo](/ex-helpers) - **NEW!** Simple framework helpers for widgets
 
 ### Features Demonstrated
 - **Static Markdown**: Clean, readable content files

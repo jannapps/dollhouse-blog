@@ -6,6 +6,4 @@ css_class: post-list-widget
 
 # All Posts
 
-<% get_all_posts.each do |post_name, post_info| %>
-- [<%= post_info[:title] %>](/<%= post_name %>)<% if post_info[:dynamic] %> ⚡<% end %>
-<% end %>
+<%= post_list %>
