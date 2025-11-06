@@ -120,6 +120,113 @@ body {
   border: none;
 }
 
+/* Widget Styling */
+.widget {
+  background: rgba(255, 255, 255, 0.6);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(52, 152, 219, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+}
+
+.markdown-widget h1 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c3e50;
+  border: none;
+  padding: 0;
+}
+
+.markdown-widget h2 {
+  margin: 1rem 0 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #34495e;
+}
+
+.markdown-widget h3, .markdown-widget h4, .markdown-widget h5, .markdown-widget h6 {
+  margin: 0.75rem 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #34495e;
+}
+
+.markdown-widget p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.markdown-widget ul, .markdown-widget ol {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.markdown-widget li {
+  margin-bottom: 0.5rem;
+}
+
+.markdown-widget a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.markdown-widget a:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+.markdown-widget code {
+  background: rgba(52, 152, 219, 0.1);
+  color: #3498db;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-family: 'Monaco', 'Consolas', monospace;
+  font-size: 0.85rem;
+}
+
+.markdown-widget pre {
+  background: rgba(52, 152, 219, 0.05);
+  padding: 1rem;
+  border-radius: 5px;
+  border: 1px solid rgba(52, 152, 219, 0.2);
+  overflow-x: auto;
+  margin: 0.75rem 0;
+}
+
+.markdown-widget pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+/* Widget-specific styles */
+.widget-post-list ul, .widget-recent-posts ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0;
+}
+
+.widget-site-info strong {
+  color: #2c3e50;
+}
+
+/* Error styling */
+.widget-error {
+  background: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(231, 76, 60, 0.2);
+  font-style: italic;
+  text-align: center;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .container {
@@ -136,5 +243,10 @@ body {
   
   .markdown-content h2 {
     font-size: 1.5rem;
+  }
+
+  .widget {
+    padding: 1rem;
+    margin-bottom: 1rem;
   }
 }
