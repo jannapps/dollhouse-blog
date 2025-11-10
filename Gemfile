@@ -6,7 +6,7 @@ ruby "3.2.9"
 gem "rails", "8.1.1"
 
 # Database
-gem "sqlite3", "~> 2.1"
+gem "sqlite3", "~> 2.8"
 
 # Web server
 gem "puma", "~> 7.1"
