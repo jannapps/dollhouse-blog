@@ -23,7 +23,7 @@ gem "stimulus-rails", "~> 1.3"
 gem "jbuilder", "~> 2.12"
 
 # Performance
-gem "bootsnap", "~> 1.18", require: false
+gem "bootsnap", "~> 1.19", require: false
 
 # Markdown processing
 gem "redcarpet", "~> 3.6"
